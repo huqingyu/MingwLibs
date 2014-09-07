@@ -1,0 +1,5 @@
+jpeg-9a
+leptonica-1.7.1
+libharu-2.3.0RC
+lpng 1.6.12
+zlib 1.2.8
