@@ -1,0 +1,80 @@
+MSYS
+http://www.mingw.org/wiki/MSYS
+当前版本：1.0.11
+
+
+
+
+
+zlib
+下载地址：http://www.zlib.net/
+当前版本：1.2.8
+
+copy win32\makefile.gcc makefile.gcc
+mingw32-make -f makefile.gcc
+生成libz.a文件
+
+
+
+
+
+libpng
+
+下载地址：http://www.libpng.org/pub/png/libpng.html
+当前版本：1.6.6
+打开scripts/makefile.gcc设置zlib路径：
+
+
+ZLIBINC = ../zlib-1.2.8
+ZLIBLIB = ../zlib-1.2.8
+拷贝scripts/pnglibconf.h.prebuilt到源码目录，改名为pnglibconf.h
+
+copy scripts\makefile.gcc makefile.gcc
+mingw32-make -f makefile.gcc
+生成libpng.a文件
+
+
+
+
+
+
+libjpeg
+下载地址：http://www.ijg.org/
+当前版本：9
+
+cd /f/mycode/mysvn/jpeg-9
+./configure
+make
+若是出现以下错误：
+
+jcapimin.c:127:1: error: conflicting types for ‘jpeg_suppress_tables’
+jpeg_suppress_tables (j_compress_ptr cinfo, boolean suppress)
+打开jconfig.h，增加以下定义：
+
+
+#define HAVE_PROTOTYPES 1
+
+
+重新输入：
+make
+在.libs文件夹下生成libjpeg.a文件
+
+
+
+
+
+
+
+libtiff
+
+下载地址：ftp://ftp.remotesensing.org/pub/libtiff
+当前版本：4.0.3
+编译依赖zlib和libjpeg，打开jpeg-9/jconfig.h，定义如下：
+
+#define HAVE_UNSIGNED_CHAR
+#define HAVE_UNSIGNED_SHORT
+
+./configure –with-zlib-include-dir=/f/mycode/mysvn/zlib-1.2.8 –with-zlib-lib-dir=/f/mycode/mysvn/zlib-1.2.8 –with-jpeg-include-dir=/f/mycode/mysvn/jpeg-9 –with-jpeg-lib-dir=/f/mycode/mysvn/jpeg-9/.libs
+make
+
+在libtiff/.libs文件夹下生成libtiff.a文件
